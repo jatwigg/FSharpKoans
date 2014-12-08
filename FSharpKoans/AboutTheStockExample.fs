@@ -19,8 +19,7 @@ open FSharpKoans.Core
 // The following function will convert a comma separated string
 // into an array of the column values.
 //                       
-// let splitCommas (x:string) =
-//     x.Split([|','|])
+
 //---------------------------------------------------------------
 [<Koan(Sort = 15)>]
 module ``about the stock example`` =
@@ -55,8 +54,23 @@ module ``about the stock example`` =
     // tests for yourself along the way. You can also try 
     // using the F# Interactive window to check your progress.
 
+    let splitCommas (x:string) =
+        x.Split([|','|])
+
+    let getStockDiff (x:string) =
+        let split = splitCommas x 
+        let o = split.[1]
+        let c = split.[4]
+        let r = System.Double.Parse(o) - System.Double.Parse(c)
+        abs r
+
+    let getDateOfStockWithHighestDiff =
+        let result = List.maxBy getStockDiff stockData.Tail
+        let split = splitCommas result
+        split.[0]
+
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let result = getDateOfStockWithHighestDiff
         
         AssertEquality "2012-03-13" result
